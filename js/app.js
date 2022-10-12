@@ -1,11 +1,25 @@
 const Clickbutton = document.querySelectorAll('.button')
 const tbody = document.querySelector('.tbody')
 let carrito = []
+let url = 'https://jsonplaceholder.typicode.com/users'
+fetch(url)
+.then(response => response.json())
+.then(data => mostrarData(data))
+.catch(error => console.log(error))
+
+const mostrarData = (data) => {
+  console.log(data)
+  let body = ''
+  for (let i = 0; i<data.length; i++){
+    body += `<tr><td>${data[i].id}</td><td>${data[i].name}</td><td>${data[i].username}</td><td>${data[i].email}</td></tr>`
+  }
+  
+  document.getElementById('data').innerHTML = body
+}
 
 Clickbutton.forEach(btn => {
   btn.addEventListener('click', addToCarritoItem)
 })
-
 
 function addToCarritoItem(e){
   const button = e.target
@@ -42,13 +56,13 @@ function addItemCarrito(newItem){
       alert.classList.remove('hide')
   })() 
 
-  const InputElemnto = tbody.getElementsByClassName('input__elemento')
+  const InputElemento = tbody.getElementsByClassName('input__elemento')
   for(let i =0; i < carrito.length ; i++){
     if(carrito[i].title.trim() === newItem.title.trim()){
       carrito[i].cantidad ++;
-      const inputValue = InputElemnto[i]
+      const inputValue = InputElemento[i]
       inputValue.value++;
-      CarritoTotal()
+      carritoTotal()
       return null;
     }
   }
@@ -64,7 +78,7 @@ function renderCarrito(){
   carrito.map(item => {
     const tr = document.createElement('tr')
     tr.classList.add('ItemCarrito')
-    const Content = `
+    const content = `
     
     <th scope="row">1</th>
             <td class="table__productos">
@@ -78,16 +92,16 @@ function renderCarrito(){
             </td>
     
     `
-    tr.innerHTML = Content;
+    tr.innerHTML = content;
     tbody.append(tr)
 
     tr.querySelector(".delete").addEventListener('click', removeItemCarrito)
     tr.querySelector(".input__elemento").addEventListener('change', sumaCantidad)
   })
-  CarritoTotal()
+  carritoTotal()
 }
 
-function CarritoTotal(){
+function carritoTotal(){
   let Total = 0;
   const itemCartTotal = document.querySelector('.itemCartTotal')
   carrito.forEach((item) => {
@@ -126,7 +140,7 @@ function removeItemCarrito(e){
   })() 
 
   tr.remove()
-  CarritoTotal()
+  carritoTotal()
 }
 
 function sumaCantidad(e){
@@ -137,7 +151,7 @@ function sumaCantidad(e){
     if(item.title.trim() === title){
       sumaInput.value < 1 ?  (sumaInput.value = 1) : sumaInput.value;
       item.cantidad = sumaInput.value;
-      CarritoTotal()
+      carritoTotal()
     }
   })
 }
@@ -152,4 +166,8 @@ window.onload = function(){
     carrito = storage;
     renderCarrito()
   }
+}
+
+function comprarButtonClicked(){
+  tbody.innerHTML = ''
 }

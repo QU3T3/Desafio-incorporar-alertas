@@ -39,3 +39,27 @@ header, .alert{
 .hide, .remove{
   display: none;
 }
+
+.link-usuarios{
+  margin-left: 1em;
+  line-height: 40px;
+  text-decoration: none;
+  color: aliceblue;
+}
+
+.link-usuarios:hover{
+  text-decoration: none;
+  color: aliceblue;
+}
+
+.link-inicio{
+  margin-left: 1em;
+  line-height: 40px;
+  text-decoration: none;
+  color: aliceblue;
+}
+
+.link-inicio:hover{
+  text-decoration: none;
+  color: aliceblue;
+}
